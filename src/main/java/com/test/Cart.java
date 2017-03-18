@@ -62,8 +62,8 @@ public class Cart {
             throw new CartIsEmptyException();
         }
         PriceDiscounter discounter = new PriceDiscounter(discount);
-        Set<Pack> items = this.items.stream().map(discounter::apply).collect(Collectors.toSet());
-        return new Cart(items);
+        Set<Pack> updatedItems = this.items.stream().map(discounter::apply).collect(Collectors.toSet());
+        return new Cart(updatedItems);
     }
 
     class PackNotFoundException extends RuntimeException {

@@ -31,8 +31,12 @@ public class Pack {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Pack pack = (Pack) o;
         return Objects.equals(item, pack.item);
     }

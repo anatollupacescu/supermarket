@@ -14,6 +14,7 @@ public class CartTest {
     public void canCreateEmptyCart() {
         Cart cart = new Cart();
         assertNotNull(cart);
+        assertThat(cart.isEmpty(), is(true));
         assertThat(cart.getTotalPrice(), is(equalTo(0L)));
     }
 
@@ -38,7 +39,7 @@ public class CartTest {
     }
 
     @Test
-    public void doesNotAcceptDuplicateItems() {
+    public void mergesDuplicateElements() {
         Cart cart = new Cart();
         cart.addItem(new Item("shampoo", "brand", 100L), 1);
         cart.addItem(new Item("shampoo", "brand", 100L), 2);
@@ -69,7 +70,7 @@ public class CartTest {
         Cart cart = new Cart();
         cart.addItem(new Item("shampoo", "one", 100L), 1);
         final long cartPrice = cart.getTotalPrice();
-        Discount noDiscount = p -> p.getTotalPrice();
+        Discount noDiscount = Pack::getTotalPrice;
         Cart discountedCart = cart.applyPriceDiscount(noDiscount);
         assertThat(discountedCart, is(notNullValue()));
         assertThat(discountedCart, is(not(sameInstance(cart))));

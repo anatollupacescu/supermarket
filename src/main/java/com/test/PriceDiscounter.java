@@ -13,7 +13,7 @@ public class PriceDiscounter implements Function<Pack, Pack> {
     @Override
     public Pack apply(Pack pack) {
         Long newPrice = discount.apply(pack);
-        if(newPrice > pack.getTotalPrice()) {
+        if (newPrice > pack.getTotalPrice()) {
             throw new IncorrectPriceException(); //protection against badly written discounts
         }
         return new Pack(new Item(pack.getItem(), newPrice), pack.getItemCount());

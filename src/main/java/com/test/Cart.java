@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Cart {
@@ -13,7 +12,7 @@ public class Cart {
     private final Set<Pack> items;
 
     public Cart() {
-         this.items = new HashSet<>();
+        this.items = new HashSet<>();
     }
 
     private Cart(Set<Pack> items) {
@@ -28,14 +27,14 @@ public class Cart {
         Preconditions.checkNotNull(item);
         Preconditions.checkArgument(amount > 0);
         Pack pack = new Pack(item, amount);
-        if(!packAdded(pack)) {
+        if (!packAdded(pack)) {
             updatePack(pack);
         }
     }
 
     private void updatePack(Pack newPack) {
         Optional<Pack> existinPackOptional = items.stream().filter(newPack::equals).findAny();
-        if(existinPackOptional.isPresent()) {
+        if (existinPackOptional.isPresent()) {
             Pack existingPack = existinPackOptional.get();
             Pack mergedPack = new Pack(newPack, existingPack);
             items.remove(existingPack);
@@ -59,7 +58,7 @@ public class Cart {
 
     public Cart applyPriceDiscount(Discount discount) {
         Preconditions.checkNotNull(discount);
-        if(isEmpty()) {
+        if (isEmpty()) {
             throw new CartIsEmptyException();
         }
         PriceDiscounter discounter = new PriceDiscounter(discount);

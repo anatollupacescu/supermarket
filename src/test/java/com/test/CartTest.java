@@ -5,7 +5,8 @@ import org.junit.Test;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class CartTest {
 
@@ -85,7 +86,7 @@ public class CartTest {
         Cart discountedCart = cart.applyPriceDiscount(halfPriceDiscount);
         assertThat(discountedCart, is(notNullValue()));
         assertThat(discountedCart, is(not(sameInstance(cart))));
-        assertThat(discountedCart.getTotalPrice() < cartPrice , is(true));
+        assertThat(discountedCart.getTotalPrice() < cartPrice, is(true));
     }
 
     @Test(expected = PriceDiscounter.IncorrectPriceException.class)

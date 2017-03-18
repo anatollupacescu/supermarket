@@ -1,5 +1,7 @@
 package com.test;
 
+import com.google.common.base.Preconditions;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,17 +14,26 @@ public class Cart {
     }
 
     public void addItem(Item item, int amount) {
-        this.items.add(new Pack(item, amount));
+        Preconditions.checkNotNull(item);
+        Preconditions.checkArgument(amount > 0);
+        Pack pack = new Pack(item, amount);
+        if(!addPack(pack)) {
+            updatePack(pack);
+        }
     }
 
-    private class Pack {
+    private void updatePack(Pack newPack) {
+        Pack existingPack = items.stream().filter(newPack::equals).findAny().get();
+        Pack mergedPack = new Pack(newPack, existingPack);
+        items.remove(existingPack);
+        items.add(mergedPack);
+    }
 
-        private final Item item;
-        private final int count;
+    private boolean addPack(Pack pack) {
+        return items.add(pack);
+    }
 
-        public Pack(Item item, int count) {
-            this.item = item;
-            this.count = count;
-        }
+    public Set<Pack> getItems() {
+        return new HashSet<>(items);
     }
 }

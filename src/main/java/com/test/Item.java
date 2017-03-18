@@ -1,12 +1,16 @@
 package com.test;
 
+import java.util.Objects;
+
 public class Item {
 
+    private final String name;
     private final String brand;
     private final long price;
 
-    protected Item(String name, long price) {
-        this.brand = name;
+    public Item(String type, String brand, long price) {
+        this.name = type;
+        this.brand = brand;
         this.price = price;
     }
 
@@ -16,5 +20,24 @@ public class Item {
 
     public String getBrand() {
         return brand;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return price == item.price &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(brand, item.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, brand, price);
     }
 }

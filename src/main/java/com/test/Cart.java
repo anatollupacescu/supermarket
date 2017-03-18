@@ -3,6 +3,7 @@ package com.test;
 import com.google.common.base.Preconditions;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class Cart {
@@ -17,23 +18,35 @@ public class Cart {
         Preconditions.checkNotNull(item);
         Preconditions.checkArgument(amount > 0);
         Pack pack = new Pack(item, amount);
-        if(!addPack(pack)) {
+        if(!packAdded(pack)) {
             updatePack(pack);
         }
     }
 
     private void updatePack(Pack newPack) {
-        Pack existingPack = items.stream().filter(newPack::equals).findAny().get();
-        Pack mergedPack = new Pack(newPack, existingPack);
-        items.remove(existingPack);
-        items.add(mergedPack);
+        Optional<Pack> existinPackOptional = items.stream().filter(newPack::equals).findAny();
+        if(existinPackOptional.isPresent()) {
+            Pack existingPack = existinPackOptional.get();
+            Pack mergedPack = new Pack(newPack, existingPack);
+            items.remove(existingPack);
+            items.add(mergedPack);
+        } else {
+            throw new PackNotFoundException();
+        }
     }
 
-    private boolean addPack(Pack pack) {
+    private boolean packAdded(Pack pack) {
         return items.add(pack);
     }
 
     public Set<Pack> getItems() {
         return new HashSet<>(items);
+    }
+
+    public long getTotalPrice() {
+        return items.stream().mapToLong(Pack::getTotalPrice).sum();
+    }
+
+    private class PackNotFoundException extends RuntimeException {
     }
 }

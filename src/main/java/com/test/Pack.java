@@ -41,4 +41,8 @@ public class Pack {
     public int hashCode() {
         return Objects.hash(item);
     }
+
+    public long getTotalPrice() {
+        return item.getPrice() * itemCount;
+    }
 }

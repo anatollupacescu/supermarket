@@ -14,6 +14,7 @@ public class CartTest {
     public void canCreateEmptyCart() {
         Cart cart = new Cart();
         assertNotNull(cart);
+        assertThat(cart.getTotalPrice(), is(equalTo(0L)));
     }
 
     @Test(expected = NullPointerException.class)
@@ -33,6 +34,7 @@ public class CartTest {
         Cart cart = new Cart();
         cart.addItem(new Item("shampoo", "brand", 100L), 1);
         assertThat(cart.isEmpty(), is(false));
+        assertThat(cart.getTotalPrice(), is(equalTo(100L)));
     }
 
     @Test

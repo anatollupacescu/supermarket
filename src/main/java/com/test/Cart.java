@@ -5,10 +5,20 @@ import com.google.common.base.Preconditions;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Cart {
 
-    private final Set<Pack> items = new HashSet<>();
+    private final Set<Pack> items;
+
+    public Cart() {
+         this.items = new HashSet<>();
+    }
+
+    private Cart(Set<Pack> items) {
+        this.items = items;
+    }
 
     public boolean isEmpty() {
         return items.isEmpty();
@@ -47,6 +57,19 @@ public class Cart {
         return items.stream().mapToLong(Pack::getTotalPrice).sum();
     }
 
-    private class PackNotFoundException extends RuntimeException {
+    public Cart applyPriceDiscount(Discount discount) {
+        Preconditions.checkNotNull(discount);
+        if(isEmpty()) {
+            throw new CartIsEmptyException();
+        }
+        PriceDiscounter discounter = new PriceDiscounter(discount);
+        Set<Pack> items = this.items.stream().map(discounter::apply).collect(Collectors.toSet());
+        return new Cart(items);
+    }
+
+    class PackNotFoundException extends RuntimeException {
+    }
+
+    class CartIsEmptyException extends RuntimeException {
     }
 }

@@ -14,6 +14,12 @@ public class Item {
         this.price = price;
     }
 
+    public Item(Item copyFrom, long price) {
+        this.name = copyFrom.getName();
+        this.brand = copyFrom.getBrand();
+        this.price = price;
+    }
+
     public long getPrice() {
         return price;
     }

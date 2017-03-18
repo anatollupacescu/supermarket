@@ -49,4 +49,8 @@ public class Pack {
     public long getTotalPrice() {
         return item.getPrice() * itemCount;
     }
+
+    public long getItemPrice() {
+        return item.getPrice();
+    }
 }

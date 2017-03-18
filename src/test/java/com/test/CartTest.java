@@ -4,7 +4,8 @@ import org.junit.Test;
 
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
@@ -15,7 +16,6 @@ public class CartTest {
         Cart cart = new Cart();
         assertNotNull(cart);
         assertThat(cart.isEmpty(), is(true));
-        assertThat(cart.getTotalPrice(), is(equalTo(0L)));
     }
 
     @Test(expected = NullPointerException.class)
@@ -35,7 +35,6 @@ public class CartTest {
         Cart cart = new Cart();
         cart.addItem(new Item("shampoo", "brand", 100L), 1);
         assertThat(cart.isEmpty(), is(false));
-        assertThat(cart.getTotalPrice(), is(equalTo(100L)));
     }
 
     @Test
@@ -59,43 +58,4 @@ public class CartTest {
         assertThat(cartItems.size(), is(equalTo(2)));
     }
 
-    @Test(expected = Cart.CartIsEmptyException.class)
-    public void canNotApplyDiscountOnEmptyCart() {
-        Cart cart = new Cart();
-        cart.applyPriceDiscount(c -> 0L);
-    }
-
-    @Test
-    public void canApplyDiscount() {
-        Cart cart = new Cart();
-        cart.addItem(new Item("shampoo", "one", 100L), 1);
-        final long cartPrice = cart.getTotalPrice();
-        Discount noDiscount = Pack::getTotalPrice;
-        Cart discountedCart = cart.applyPriceDiscount(noDiscount);
-        assertThat(discountedCart, is(notNullValue()));
-        assertThat(discountedCart, is(not(sameInstance(cart))));
-        assertThat(discountedCart.getTotalPrice(), is(equalTo(cartPrice)));
-    }
-
-    @Test
-    public void realDiscountChangesTotalPrice() {
-        Cart cart = new Cart();
-        Item shampoo = new Item("shampoo", "one", 100L);
-        cart.addItem(shampoo, 1);
-        final long cartPrice = cart.getTotalPrice();
-        Discount halfPriceDiscount = pack -> pack.getTotalPrice() / 2;
-        Cart discountedCart = cart.applyPriceDiscount(halfPriceDiscount);
-        assertThat(discountedCart, is(notNullValue()));
-        assertThat(discountedCart, is(not(sameInstance(cart))));
-        assertThat(discountedCart.getTotalPrice() < cartPrice, is(true));
-    }
-
-    @Test(expected = PriceDiscounter.IncorrectPriceException.class)
-    public void canNotApplyBadlyWrittenDiscount() {
-        Cart cart = new Cart();
-        Item shampoo = new Item("shampoo", "one", 100L);
-        cart.addItem(shampoo, 1);
-        Discount halfPriceDiscount = pack -> pack.getTotalPrice() * 2;
-        cart.applyPriceDiscount(halfPriceDiscount);
-    }
 }

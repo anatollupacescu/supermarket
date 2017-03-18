@@ -19,8 +19,7 @@ public class PackTest {
 
     @Test(expected = NullPointerException.class)
     public void doesNotAcceptNullItem() {
-        Item item = null;
-        new Pack(item, 1);
+        new Pack(null, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -42,5 +41,4 @@ public class PackTest {
         assertThat(mergedPack.getItemCount(), is(equalTo(5)));
         assertThat(mergedPack.getTotalPrice(), is(equalTo(5 * item.getPrice())));
     }
-
 }

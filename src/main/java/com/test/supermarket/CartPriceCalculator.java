@@ -1,6 +1,9 @@
-package com.test;
+package com.test.supermarket;
 
 import com.google.common.base.Preconditions;
+import com.test.supermarket.domain.Cart;
+import com.test.supermarket.domain.Pack;
+import com.test.supermarket.exception.CartIsEmptyException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,12 +20,13 @@ public class CartPriceCalculator {
         return items.stream().mapToLong(Pack::getTotalPrice).sum();
     }
 
-    public void applyPriceDiscount(Discount discount) {
-        Preconditions.checkNotNull(discount);
+    public void useDiscounter(PackPriceDiscounter discounter) {
+        Preconditions.checkNotNull(discounter);
         if (items.isEmpty()) {
             throw new CartIsEmptyException();
         }
-        PriceDiscounter discounter = new PriceDiscounter(discount);
-        items = items.stream().map(discounter).collect(Collectors.toSet());
+        if (discounter.canBeApplied(items)) {
+            items = items.stream().map(discounter).collect(Collectors.toSet());
+        }
     }
 }

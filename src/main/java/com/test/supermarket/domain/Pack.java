@@ -1,4 +1,4 @@
-package com.test;
+package com.test.supermarket.domain;
 
 import com.google.common.base.Preconditions;
 
@@ -29,6 +29,10 @@ public class Pack {
         return itemCount;
     }
 
+    public long getTotalPrice() {
+        return item.getPrice() * itemCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,11 +50,4 @@ public class Pack {
         return Objects.hash(item);
     }
 
-    public long getTotalPrice() {
-        return item.getPrice() * itemCount;
-    }
-
-    public long getItemPrice() {
-        return item.getPrice();
-    }
 }

@@ -1,5 +1,7 @@
 package com.test;
 
+import com.test.supermarket.domain.Item;
+import com.test.supermarket.domain.Pack;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;

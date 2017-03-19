@@ -1,6 +1,7 @@
-package com.test;
+package com.test.supermarket.domain;
 
 import com.google.common.base.Preconditions;
+import com.test.supermarket.exception.PackNotFoundException;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -41,8 +42,5 @@ public class Cart {
 
     private boolean packAdded(Pack pack) {
         return items.add(pack);
-    }
-
-    class PackNotFoundException extends RuntimeException {
     }
 }

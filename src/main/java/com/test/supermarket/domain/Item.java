@@ -1,4 +1,4 @@
-package com.test;
+package com.test.supermarket.domain;
 
 import java.util.Objects;
 

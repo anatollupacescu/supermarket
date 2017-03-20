@@ -7,5 +7,7 @@ import java.util.function.Function;
 
 public interface PackPriceReviser extends Function<Pack, Long> {
 
-    boolean canBeApplied(Set<Pack> items);
+    boolean canBeAppliedToCart(Set<Pack> items);
+
+    boolean canBeAppliedToPack(Pack pack);
 }

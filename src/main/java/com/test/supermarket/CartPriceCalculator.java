@@ -20,7 +20,7 @@ public class CartPriceCalculator {
         return items.stream().mapToLong(Pack::getTotalPrice).sum();
     }
 
-    public void useDiscounter(PackPriceDiscounter discounter) {
+    public void useDiscounter(PackMapper discounter) {
         Preconditions.checkNotNull(discounter);
         if (items.isEmpty()) {
             throw new CartIsEmptyException();

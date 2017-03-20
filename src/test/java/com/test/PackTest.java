@@ -43,4 +43,18 @@ public class PackTest {
         assertThat(mergedPack.getItemCount(), is(equalTo(5)));
         assertThat(mergedPack.getTotalPrice(), is(equalTo(5 * item.getPrice())));
     }
+
+    @Test
+    public void cloneWithPriceClonesCorrectly() {
+        Item item = new Item("bread", "brand", 10L);
+        int count = 2;
+        Pack pack = new Pack(item, count);
+        long newPrice = 9L;
+        Pack clonedPack = pack.cloneWithPrice(newPrice);
+        assertThat(clonedPack.getItem().getBrand(), is(equalTo(item.getBrand())));
+        assertThat(clonedPack.getItem().getName(), is(equalTo(item.getName())));
+        assertThat(clonedPack.getItem().getPrice(), is(equalTo(newPrice)));
+        assertThat(clonedPack.getTotalPrice(), is(equalTo(count * newPrice)));
+        assertThat(clonedPack.getItemCount(), is(equalTo(count)));
+    }
 }

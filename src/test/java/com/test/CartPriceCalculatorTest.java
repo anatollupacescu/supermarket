@@ -1,16 +1,15 @@
 package com.test;
 
+import com.test.example.PackPriceDiscounter;
 import com.test.supermarket.CartPriceCalculator;
-import com.test.supermarket.PackPriceDiscounter;
+import com.test.supermarket.PackMapper;
 import com.test.supermarket.domain.Cart;
 import com.test.supermarket.domain.Item;
 import com.test.supermarket.exception.CartIsEmptyException;
 import com.test.supermarket.exception.IncorrectPriceException;
 import org.junit.Test;
 
-import static com.test.Discounts.halfPriceDiscountOnMoreThanOneItem;
-import static com.test.Discounts.incorrectDiscount;
-import static com.test.Discounts.noDiscount;
+import static com.test.TestDiscounts.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
@@ -42,7 +41,7 @@ public class CartPriceCalculatorTest {
     public void canNotApplyDiscountOnEmptyCart() {
         Cart cart = new Cart();
         CartPriceCalculator calculator = new CartPriceCalculator(cart);
-        PackPriceDiscounter discounter = new PackPriceDiscounter(halfPriceDiscountOnMoreThanOneItem);
+        PackMapper discounter = new PackPriceDiscounter(halfPriceDiscountOnMoreThanOneItem);
         calculator.useDiscounter(discounter);
     }
 
@@ -50,7 +49,7 @@ public class CartPriceCalculatorTest {
     public void canApplyDiscount() {
         CartPriceCalculator calculator = createCalculator();
         final long cartPrice = calculator.getPrice();
-        PackPriceDiscounter discounter = new PackPriceDiscounter(noDiscount);
+        PackMapper discounter = new PackPriceDiscounter(noDiscount);
         calculator.useDiscounter(discounter);
         assertThat(calculator.getPrice(), is(equalTo(cartPrice)));
     }
@@ -59,7 +58,7 @@ public class CartPriceCalculatorTest {
     public void realDiscountChangesTotalPrice() {
         CartPriceCalculator calculator = createCalculator();
         final long cartPriceBeforeDiscount = calculator.getPrice();
-        PackPriceDiscounter discounter = new PackPriceDiscounter(halfPriceDiscountOnMoreThanOneItem);
+        PackMapper discounter = new PackPriceDiscounter(halfPriceDiscountOnMoreThanOneItem);
         calculator.useDiscounter(discounter);
         assertThat(calculator.getPrice() < cartPriceBeforeDiscount, is(true));
     }
@@ -67,7 +66,7 @@ public class CartPriceCalculatorTest {
     @Test(expected = IncorrectPriceException.class)
     public void canNotApplyBadlyWrittenDiscount() {
         CartPriceCalculator calculator = createCalculator();
-        PackPriceDiscounter discounter = new PackPriceDiscounter(incorrectDiscount);
+        PackMapper discounter = new PackPriceDiscounter(incorrectDiscount);
         calculator.useDiscounter(discounter);
     }
 

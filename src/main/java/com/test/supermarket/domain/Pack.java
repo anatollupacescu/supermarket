@@ -33,6 +33,10 @@ public class Pack {
         return item.getPrice() * itemCount;
     }
 
+    public Pack cloneWithPrice(Long newPrice) {
+        return new Pack(new Item(item, newPrice), itemCount);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -49,5 +53,4 @@ public class Pack {
     public int hashCode() {
         return Objects.hash(item);
     }
-
 }

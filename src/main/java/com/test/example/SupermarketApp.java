@@ -2,6 +2,7 @@ package com.test.example;
 
 import com.test.supermarket.*;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SupermarketApp {
@@ -16,16 +17,16 @@ public class SupermarketApp {
         Item phone = new Item("milk", "lacta", 10L);
         cart.addItem(phone, 3);
         DiscountCart discountedCart = new DiscountCart(cart);
-        log.info("Cart price before discount: " + discountedCart.preview().getTotalPrice());
-        log.info("Cart before discount: " + discountedCart.preview());
-        log.info("-------------");
+        log.log(Level.INFO, "Cart price before discount: {0}", discountedCart.preview().getTotalPrice());
+        log.log(Level.INFO, "Cart before discount: {0}", discountedCart.preview());
+        log.log(Level.INFO, "-------------");
         discountedCart.addDiscount(new BuyTwoGetOneFreeDiscount());
         CartItems cartItemsPreview = discountedCart.preview();
-        log.info("Price preview: " + cartItemsPreview.getTotalPrice());
-        log.info("Cart preview: " + cartItemsPreview);
-        log.info("-------------");
+        log.log(Level.INFO, "Price preview: {0}", cartItemsPreview.getTotalPrice());
+        log.log(Level.INFO, "Cart preview: {0}", cartItemsPreview);
+        log.log(Level.INFO, "-------------");
         discountedCart.apply();
-        log.info("Cart after discount: " + discountedCart.getItems());
-        log.info("Cart price after discount: " + discountedCart.getItems().getTotalPrice());
+        log.log(Level.INFO, "Cart after discount: {0}", discountedCart.getItems());
+        log.log(Level.INFO, "Cart price after discount: {0}", discountedCart.getItems().getTotalPrice());
     }
 }

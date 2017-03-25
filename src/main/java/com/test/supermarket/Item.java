@@ -1,4 +1,4 @@
-package com.test.supermarket.domain;
+package com.test.supermarket;
 
 import java.util.Objects;
 
@@ -11,12 +11,6 @@ public class Item {
     public Item(String type, String brand, long price) {
         this.name = type;
         this.brand = brand;
-        this.price = price;
-    }
-
-    public Item(Item copyFrom, long price) {
-        this.name = copyFrom.getName();
-        this.brand = copyFrom.getBrand();
         this.price = price;
     }
 
@@ -45,5 +39,14 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hash(name, brand, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

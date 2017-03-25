@@ -1,7 +1,7 @@
 package com.test;
 
-import com.test.supermarket.domain.Item;
-import com.test.supermarket.domain.Pack;
+import com.test.supermarket.Item;
+import com.test.supermarket.Pack;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -31,6 +31,23 @@ public class PackTest {
     }
 
     @Test
+    public void packDiscountLowersPrice() {
+        Item item = new Item("bread", "brand", 10L);
+        int count = 1;
+        Pack pack = new Pack(item, count);
+        Pack discountPack = pack.copyWithDiscount(2L);
+        assertThat(discountPack.getTotalPrice(), is(equalTo(8L)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void discountIsPositive() {
+        Item item = new Item("bread", "brand", 10L);
+        int count = 1;
+        Pack pack = new Pack(item, count);
+        pack.copyWithDiscount(-2L);
+    }
+
+    @Test
     public void canMergePacks() {
         Item item = new Item("bread", "brand", 10L);
         Pack pack1 = new Pack(item, 2);
@@ -42,19 +59,5 @@ public class PackTest {
         assertThat(mergedPack.getItem(), is(sameInstance(item)));
         assertThat(mergedPack.getItemCount(), is(equalTo(5)));
         assertThat(mergedPack.getTotalPrice(), is(equalTo(5 * item.getPrice())));
-    }
-
-    @Test
-    public void cloneWithPriceClonesCorrectly() {
-        Item item = new Item("bread", "brand", 10L);
-        int count = 2;
-        Pack pack = new Pack(item, count);
-        long newPrice = 9L;
-        Pack clonedPack = pack.cloneWithPrice(newPrice);
-        assertThat(clonedPack.getItem().getBrand(), is(equalTo(item.getBrand())));
-        assertThat(clonedPack.getItem().getName(), is(equalTo(item.getName())));
-        assertThat(clonedPack.getItem().getPrice(), is(equalTo(newPrice)));
-        assertThat(clonedPack.getTotalPrice(), is(equalTo(count * newPrice)));
-        assertThat(clonedPack.getItemCount(), is(equalTo(count)));
     }
 }

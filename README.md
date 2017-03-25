@@ -1,12 +1,19 @@
-# This is a trivial implementation of a supermarket
+# Kata01: Supermarket Pricing
 
-Cart class holds Pack(s) of Item(s)
+The purpose of this project is to implement a platform that would allow adding items to a cart and then
+applying discounts on this cart.
 
-PackPriceDiscounter is using a PackPriceReviser to calculate the discounted price for a Pack
+The questions like:
 
-CartPriceCalculator can use PackPriceDiscounter to mutate its state (update Pack(s) prices)
+    does fractional money exist?
+    when (if ever) does rounding take place?
+    how do you keep an audit trail of pricing decisions (and do you need to)?
+    are costs and prices the same class of thing?
+    if a shelf of 100 cans is priced using “buy two, get one free”, how do you value the stock?
 
-#I wrote it this way because it was suggested to me that it would be nice to get it done before Monday, so here it is.
-#For a real-life task I would use a different approach, where you have an immutable Cart you can add discounts to and
-#the discounts would get applied lazily during the checkout while providing a preview of the final price.
+Are out of the scope of this project and should be handled separately.
 
+Sample discounts used here are:
+
+- three for a dollar
+- buy two, get one free

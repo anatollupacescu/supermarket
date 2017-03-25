@@ -1,8 +1,8 @@
 package com.test;
 
-import com.test.supermarket.domain.Cart;
-import com.test.supermarket.domain.Item;
-import com.test.supermarket.domain.Pack;
+import com.test.supermarket.Cart;
+import com.test.supermarket.Item;
+import com.test.supermarket.Pack;
 import org.junit.Test;
 
 import java.util.Set;
@@ -60,5 +60,4 @@ public class CartTest {
         Set<Pack> cartItems = cart.getItems();
         assertThat(cartItems.size(), is(equalTo(2)));
     }
-
 }

@@ -1,9 +1,10 @@
-# Kata01: Supermarket Pricing
+# README #
 
-The purpose of this project is to implement a platform that would allow adding items to a cart and then
-applying discounts on this cart.
+Supermarket app that allows adding items to a cart and then applying discounts on this cart.
 
-The questions like:
+### Feedback ###
+
+* The app does not cover this questions:
 
     does fractional money exist?
     when (if ever) does rounding take place?
@@ -11,9 +12,3 @@ The questions like:
     are costs and prices the same class of thing?
     if a shelf of 100 cans is priced using “buy two, get one free”, how do you value the stock?
 
-Are out of the scope of this project and should be handled separately.
-
-Sample discounts used here are:
-
-- three for a dollar
-- buy two, get one free
